@@ -9,7 +9,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnCountdownTimer;
-    [SerializeField] private bool _canSpawn = false;
+    [SerializeField] private bool _canSpawn = true;
     [SerializeField] private bool _isDrag = false;
     private float _minX, _maxX;
     private Fruit _currentFruit;
