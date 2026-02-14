@@ -965,7 +965,7 @@ Transform:
   m_GameObject: {fileID: 845548762}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.5, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1721,6 +1721,12 @@ MonoBehaviour:
   - type: 4
     fruitPrefab: {fileID: 2409897388986707252, guid: c77597df844a89e48883f3e8932efdf1, type: 3}
     size: 20
+  - type: 5
+    fruitPrefab: {fileID: 8735385552894865012, guid: f5f04afb8c070e242a75872c353257e5, type: 3}
+    size: 20
+  - type: 6
+    fruitPrefab: {fileID: 2783558929603643260, guid: c901196e53e792d48b558a3602f33c25, type: 3}
+    size: 20
 --- !u!4 &1366322548
 Transform:
   m_ObjectHideFlags: 0
@@ -1761,7 +1767,7 @@ Transform:
   m_GameObject: {fileID: 1596610511}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
