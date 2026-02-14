@@ -123,6 +123,7 @@ public class GameController : MonoBehaviour
         float clampedX = Mathf.Clamp(worldPos.x, _minX + fruitRadius, _maxX - fruitRadius);
 
         _currentFruit.transform.position = new Vector3(clampedX, _currentFruit.transform.position.y, 0f);
+        _currentFruit.ShowDivideLine();
     }
 
     private void DropFruit()
@@ -130,6 +131,7 @@ public class GameController : MonoBehaviour
         Rigidbody2D rb = _currentFruit.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
 
+        _currentFruit.HideDivideLine();
         _currentFruit = null;
         _spawnCountdownTimer = _spawnDelay;
         _isDrag = true;
@@ -147,11 +149,6 @@ public class GameController : MonoBehaviour
 
     public void MergeFruit(Fruit a, Fruit b)
     {
-        if (a.Type != b.Type)
-        {
-            Debug.Log($"Not merge type a: {a.Type}, type b : {b.Type}");
-            return;
-        }
         Vector3 mergePos = (a.transform.position + b.transform.position) / 2f;
 
         FruitType nextType = GetNextFruitType(a.Type);
@@ -162,8 +159,6 @@ public class GameController : MonoBehaviour
         FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
 
         //AddScore(nextType);
-
-        //SpawnNextFruit();
     }
 
     #endregion
