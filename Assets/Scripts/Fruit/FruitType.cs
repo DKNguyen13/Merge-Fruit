@@ -4,4 +4,7 @@ public enum FruitType
     Fruit_2,
     Fruit_3,
     Fruit_4,
+    Fruit_5,
+    Fruit_6,
+    Fruit_7,
 }

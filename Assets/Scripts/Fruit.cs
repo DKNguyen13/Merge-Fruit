@@ -33,7 +33,7 @@ public class Fruit : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Fruit"))
+        if (collision.gameObject.CompareTag("Food"))
         {
             var fruit = collision.gameObject.GetComponent<Fruit>();
             if (fruit && fruit.Type == _type && _isMerging == false && !fruit.IsMerging && GetInstanceID() < fruit.GetInstanceID())
