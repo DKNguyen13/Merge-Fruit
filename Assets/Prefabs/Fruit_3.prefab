@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8136239851232077136}
   - component: {fileID: 1942220910853152736}
   - component: {fileID: 8624398015415911886}
+  - component: {fileID: -2854058047333207375}
   m_Layer: 0
   m_Name: Fruit_3
   m_TagString: Fruit
@@ -148,3 +149,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-2854058047333207375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6055379299175296417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e43662264137afe4ab83a64dcb0b9ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
