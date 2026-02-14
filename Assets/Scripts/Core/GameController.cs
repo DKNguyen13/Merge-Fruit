@@ -7,9 +7,12 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
 
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private bool _canSpawn = true;
-    [SerializeField] private float _spawnDelay = 1f;
-    private float _spawnCountdownTimer;
+    [SerializeField] private float _spawnDelay = 2f;
+    [SerializeField] private float _spawnCountdownTimer;
+    [SerializeField] private bool _canSpawn = false;
+    [SerializeField] private bool _isDrag = false;
+    private float _minX, _maxX;
+    private Fruit _currentFruit;
 
     void Awake()
     {
@@ -20,6 +23,8 @@ public class GameController : MonoBehaviour
         }
 
         Instance = this;
+
+        Setup();
     }
 
     void Start()
@@ -29,11 +34,34 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (!_canSpawn &&  _spawnCountdownTimer >= 0f)
+        HandleInput();
+        
+        if (!_canSpawn)
         {
-            _spawnCountdownTimer -= Time.deltaTime;
+            if (!_isDrag) return;
+
+            if (_spawnCountdownTimer > 0f)
+            {
+                _spawnCountdownTimer -= Time.deltaTime;
+            }
+            else
+            {
+                _canSpawn = true;
+                _isDrag = false;
+                SpawnNextFruit();
+            }
         }
     }
+
+    #region Setup
+    private void Setup()
+    {
+        float height = Camera.main.orthographicSize;
+        float width = height * Camera.main.aspect;
+        _minX = - width + 1f;
+        _maxX = width - 1f;
+    }
+    #endregion
 
     #region Spawn
     public void SpawnNextFruit()
@@ -41,19 +69,9 @@ public class GameController : MonoBehaviour
         if (!_canSpawn) return;
 
         _canSpawn = false;
-        _spawnCountdownTimer = _spawnDelay;
 
         //FruitType randomType = GetRandomFruitType();
-        FruitPooling.Instance.GetFruitFromPool(FruitType.Fruit_1, _spawnPoint.position);
-    }
-
-    private FruitType GetNextFruitType(FruitType current)
-    {
-        int nextIndex = (int)current + 1;
-
-        if (nextIndex >= System.Enum.GetValues(typeof(FruitType)).Length) return current;
-
-        return (FruitType)nextIndex;
+        _currentFruit = FruitPooling.Instance.GetFruitFromPool(FruitType.Fruit_1, _spawnPoint.position).GetComponent<Fruit>();
     }
 
     private FruitType GetRandomFruitType()
@@ -65,9 +83,75 @@ public class GameController : MonoBehaviour
     }
     #endregion
 
+    #region Input
+    private void HandleInput()
+    {
+        if (_currentFruit == null) return;
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            {
+                MoveFruit(touch.position);
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                DropFruit();
+            }
+        }
+
+    #if UNITY_EDITOR
+        if (Input.GetMouseButton(0))
+        {
+            MoveFruit(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            DropFruit();
+        }
+    #endif
+    }
+
+    private void MoveFruit(Vector2 screenPos)
+    {
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
+        
+        float clampedX = Mathf.Clamp(worldPos.x, _minX, _maxX);
+
+        _currentFruit.transform.position = new Vector3(clampedX, _currentFruit.transform.position.y, 0f);
+    }
+
+    private void DropFruit()
+    {
+        Rigidbody2D rb = _currentFruit.GetComponent<Rigidbody2D>();
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
+        _currentFruit = null;
+        _spawnCountdownTimer = _spawnDelay;
+        _isDrag = true;
+    }
+    #endregion
+
     #region Merge Fruit
+    private FruitType GetNextFruitType(FruitType current)
+    {
+        int nextIndex = (int)current + 1;
+
+        if (nextIndex >= System.Enum.GetValues(typeof(FruitType)).Length) return current;
+        return (FruitType)nextIndex;
+    }
+
     public void MergeFruit(Fruit a, Fruit b)
     {
+        if (a.Type != b.Type)
+        {
+            Debug.Log($"Not merge type a: {a.Type}, type b : {b.Type}");
+            return;
+        }
         Vector3 mergePos = (a.transform.position + b.transform.position) / 2f;
 
         FruitType nextType = GetNextFruitType(a.Type);
@@ -75,7 +159,7 @@ public class GameController : MonoBehaviour
         FruitPooling.Instance.ReturnFruitFromPool(a.gameObject);
         FruitPooling.Instance.ReturnFruitFromPool(b.gameObject);
 
-        FruitPooling.Instance.GetFruitFromPool(nextType, mergePos);
+        FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
 
         //AddScore(nextType);
 

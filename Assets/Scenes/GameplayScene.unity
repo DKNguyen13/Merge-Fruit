@@ -322,8 +322,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnPoint: {fileID: 845548763}
+  _spawnDelay: 2
+  _spawnCountdownTimer: 0
   _canSpawn: 1
-  _spawnDelay: 1
+  _isDrag: 0
 --- !u!1 &1366322546
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,10 +358,10 @@ MonoBehaviour:
   _fruits:
   - type: 0
     fruitPrefab: {fileID: 5633560793284323617, guid: d33f2870164f70941ad927637294b8fc, type: 3}
-    size: 10
+    size: 20
   - type: 1
     fruitPrefab: {fileID: 638658657825389048, guid: 414ca523a514cf24c805e771972e776f, type: 3}
-    size: 10
+    size: 20
 --- !u!4 &1366322548
 Transform:
   m_ObjectHideFlags: 0

@@ -70,6 +70,18 @@ public class FruitPooling : MonoBehaviour
         return obj;
     }
 
+    public GameObject GetFruitMergeFromPool(FruitType type, Vector3 position)
+    {
+        if (!_fruitDict.TryGetValue(type, out var queue))  return null;
+        if (queue.Count == 0) return null;
+        
+        GameObject obj = queue.Dequeue();
+        obj.transform.position = position;
+        obj.SetActive(true);
+
+        return obj;
+    }
+
     public void ReturnFruitFromPool(GameObject obj)
     {
         var fruit = obj.GetComponent<Fruit>();
