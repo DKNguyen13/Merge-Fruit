@@ -58,8 +58,8 @@ public class GameController : MonoBehaviour
     {
         float height = Camera.main.orthographicSize;
         float width = height * Camera.main.aspect;
-        _minX = - width + 1f;
-        _maxX = width - 1f;
+        _minX = - width;
+        _maxX = width;
     }
     #endregion
 
@@ -119,8 +119,8 @@ public class GameController : MonoBehaviour
     private void MoveFruit(Vector2 screenPos)
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        
-        float clampedX = Mathf.Clamp(worldPos.x, _minX, _maxX);
+        float fruitRadius = _currentFruit.GetComponent<CircleCollider2D>().radius * _currentFruit.transform.localScale.x;
+        float clampedX = Mathf.Clamp(worldPos.x, _minX + fruitRadius, _maxX - fruitRadius);
 
         _currentFruit.transform.position = new Vector3(clampedX, _currentFruit.transform.position.y, 0f);
     }
