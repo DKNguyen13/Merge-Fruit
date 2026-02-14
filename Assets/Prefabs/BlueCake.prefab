@@ -204,9 +204,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.00000023841858, y: -0.021398704}
+  m_Offset: {x: -0.0020513535, y: 0.0032164573}
   serializedVersion: 2
-  m_Radius: 0.66080374
+  m_Radius: 0.55618966
 --- !u!50 &1316839509594931206
 Rigidbody2D:
   serializedVersion: 4
@@ -249,6 +249,7 @@ MonoBehaviour:
   _type: 3
   _devideLine: {fileID: 6563381896880677211}
   _isMerging: 0
+  _scoreValue: 80
 --- !u!1 &4782350695884427720
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 11a46d87463b2bf4d9e374569251aa7c
+guid: 2ee9ea0841eb96f45b14c1baacc1e1c8
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - GROBOLD
+  - Milkyway DEMO
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

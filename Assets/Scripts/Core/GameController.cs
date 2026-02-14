@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class GameController : MonoBehaviour
@@ -11,8 +9,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _spawnCountdownTimer;
     [SerializeField] private bool _canSpawn = true;
     [SerializeField] private bool _isDrag = false;
+    [SerializeField] private int _score;
     private float _minX, _maxX;
     private Fruit _currentFruit;
+    private FruitType _currentType;
+    private FruitType _nextType;
+
 
     void Awake()
     {
@@ -29,7 +31,12 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        SpawnNextFruit();
+        _currentType = GetRandomFruitType();
+        _nextType = GetRandomFruitType();
+        
+        UIManager.Instance.UpdateNextFoodUI(_nextType);
+
+        SpawnCurrentFruit();
     }
 
     void Update()
@@ -48,7 +55,13 @@ public class GameController : MonoBehaviour
             {
                 _canSpawn = true;
                 _isDrag = false;
-                SpawnNextFruit();
+
+                _currentType = _nextType;
+                _nextType = GetRandomFruitType();
+
+                UIManager.Instance.UpdateNextFoodUI(_nextType);
+
+                SpawnCurrentFruit();
             }
         }
     }
@@ -64,14 +77,13 @@ public class GameController : MonoBehaviour
     #endregion
 
     #region Spawn
-    public void SpawnNextFruit()
+    public void SpawnCurrentFruit()
     {
         if (!_canSpawn) return;
 
         _canSpawn = false;
 
-        //FruitType randomType = GetRandomFruitType();
-        _currentFruit = FruitPooling.Instance.GetFruitFromPool(FruitType.Fruit_1, _spawnPoint.position).GetComponent<Fruit>();
+        _currentFruit = FruitPooling.Instance.GetFruitFromPool(_currentType, _spawnPoint.position).GetComponent<Fruit>();
     }
 
     private FruitType GetRandomFruitType()
@@ -157,9 +169,14 @@ public class GameController : MonoBehaviour
         FruitPooling.Instance.ReturnFruitFromPool(b.gameObject);
 
         FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
-
-        //AddScore(nextType);
     }
+    #endregion
 
+    #region Score
+    public void AddScore(int amount)
+    {
+        _score += amount;
+        UIManager.Instance.UpdateScore(_score);
+    }
     #endregion
 }

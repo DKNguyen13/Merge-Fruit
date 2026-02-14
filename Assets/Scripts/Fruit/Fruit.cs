@@ -6,6 +6,7 @@ public class Fruit : MonoBehaviour
     [SerializeField] private FruitType _type;
     [SerializeField] private GameObject _devideLine;
     [SerializeField] private bool _isMerging;
+    [SerializeField] private int _scoreValue;
 
     private Rigidbody2D _rb;
 
@@ -40,6 +41,7 @@ public class Fruit : MonoBehaviour
             {
                 _isMerging = true;
                 fruit.IsMerging = true;
+                GameController.Instance.AddScore(_scoreValue * 2);
                 GameController.Instance.MergeFruit(this, fruit);
             }
         }
@@ -53,4 +55,5 @@ public class Fruit : MonoBehaviour
         set => _isMerging = value;
         get => _isMerging;   
     }
+    public int ScoreValue => _scoreValue;
 }

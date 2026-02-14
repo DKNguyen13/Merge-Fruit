@@ -165,6 +165,7 @@ MonoBehaviour:
   _type: 1
   _devideLine: {fileID: 6867284088195299922}
   _isMerging: 0
+  _scoreValue: 20
 --- !u!1 &2053175352176779147
 GameObject:
   m_ObjectHideFlags: 0
