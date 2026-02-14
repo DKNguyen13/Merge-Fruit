@@ -39,7 +39,7 @@ public class Fruit : MonoBehaviour
             if (fruit && fruit.Type == _type && _isMerging == false && !fruit.IsMerging && GetInstanceID() < fruit.GetInstanceID())
             {
                 _isMerging = true;
-                IsMerging = true;
+                fruit.IsMerging = true;
                 GameController.Instance.MergeFruit(this, fruit);
             }
         }
@@ -47,6 +47,7 @@ public class Fruit : MonoBehaviour
 
     // Getter, setter
     public FruitType Type => _type;
+    public Rigidbody2D Rb => _rb;
     public bool IsMerging
     {
         set => _isMerging = value;

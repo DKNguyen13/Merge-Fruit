@@ -63,6 +63,7 @@ public class FruitPooling : MonoBehaviour
         if (queue.Count == 0) return null;
         
         GameObject obj = queue.Dequeue();
+        obj.GetComponent<Fruit>().Rb.bodyType = RigidbodyType2D.Kinematic;
         obj.transform.position = position;
         obj.SetActive(true);
 
