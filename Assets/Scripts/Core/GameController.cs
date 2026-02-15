@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private bool _isDrag = false;
     [SerializeField] private int _score;
 
+    private bool _isPaused = false;
     private float _minX, _maxX;
     private Fruit _currentFruit;
     private FruitType _currentType;
@@ -46,7 +48,7 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
-        if (_isGameOver) return;
+        if (_isGameOver || _isPaused) return;
 
         HandleInput();
         
@@ -107,6 +109,21 @@ public class GameController : MonoBehaviour
     {
         if (_currentFruit == null) return;
 
+    #if UNITY_EDITOR
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        if (Input.GetMouseButton(0))
+        {
+            MoveFruit(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            DropFruit();
+        }
+    #elif UNITY_ANDROID
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -122,16 +139,6 @@ public class GameController : MonoBehaviour
             }
         }
 
-    #if UNITY_EDITOR
-        if (Input.GetMouseButton(0))
-        {
-            MoveFruit(Input.mousePosition);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            DropFruit();
-        }
     #endif
     }
     #endregion
@@ -204,7 +211,16 @@ public class GameController : MonoBehaviour
     }
     #endregion
 
+    #region Pause game
+    public void PauseGame(bool pause)
+    {
+        _isPaused = pause;
+        Time.timeScale = pause ? 0 : 1;
+    }
+    #endregion
+
     // Getter, setter
     public bool IsGameOver => _isGameOver;
+    public bool IsPause => _isPaused;
     public float DeathY => _deathZoneTransform.position.y;
 }
