@@ -6,16 +6,20 @@ public class GameController : MonoBehaviour
     public static System.Action<FruitType> OnFruitMerged;
 
     [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Transform _deathZoneTransform;
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnCountdownTimer;
     [SerializeField] private bool _canSpawn = true;
     [SerializeField] private bool _isDrag = false;
     [SerializeField] private int _score;
+
     private float _minX, _maxX;
     private Fruit _currentFruit;
     private FruitType _currentType;
     private FruitType _nextType;
 
+    // Bool
+    private bool _isGameOver = false;
 
     void Awake()
     {
@@ -42,6 +46,8 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+        if (_isGameOver) return;
+
         HandleInput();
         
         if (!_canSpawn)
@@ -145,7 +151,7 @@ public class GameController : MonoBehaviour
     {
         Rigidbody2D rb = _currentFruit.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
-        rb.angularVelocity = Random.Range(-300f, 300f);
+        rb.angularVelocity = Random.Range(-60f, 60f);
 
         _currentFruit.HideDivideLine();
         _currentFruit = null;
@@ -186,4 +192,19 @@ public class GameController : MonoBehaviour
         UIManager.Instance.UpdateScore(_score);
     }
     #endregion
+
+    #region Handler gameover
+    public void GameOver()
+    {
+        if (_isGameOver) return;
+
+        _isGameOver = true;
+
+        Debug.Log("GAME OVER!");
+    }
+    #endregion
+
+    // Getter, setter
+    public bool IsGameOver => _isGameOver;
+    public float DeathY => _deathZoneTransform.position.y;
 }

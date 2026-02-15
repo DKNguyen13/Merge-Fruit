@@ -23,7 +23,7 @@ public class CameraController : MonoBehaviour
     private void HandleMerge(FruitType type)
     {
         int level = (int)type;
-        if (level < 1) return;
+        if (level < 5) return;
         
         Shake(_duration, _strength);
     }

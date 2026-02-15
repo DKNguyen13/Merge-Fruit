@@ -8,6 +8,9 @@ public class Fruit : MonoBehaviour
     [SerializeField] private bool _isMerging;
     [SerializeField] private int _scoreValue;
 
+    private float _overDeathTimer = 0f;
+    private float _deathDelay = 1.5f;
+
     private Rigidbody2D _rb;
 
     void OnEnable()
@@ -18,6 +21,28 @@ public class Fruit : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        if (GameController.Instance.IsGameOver) return;
+        if (_rb.bodyType != RigidbodyType2D.Dynamic) return;
+
+        float deathY = GameController.Instance.DeathY;
+
+        if (transform.position.y > deathY && GetComponent<Rigidbody2D>().velocity.magnitude < 0.1f)
+        {
+            _overDeathTimer += Time.deltaTime;
+
+            if (_overDeathTimer >= _deathDelay)
+            {
+                GameController.Instance.GameOver();
+            }
+        }
+        else
+        {
+            _overDeathTimer = 0f;
+        }
     }
 
     #region Show/Hide divideLine
@@ -34,6 +59,8 @@ public class Fruit : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (_type == FruitType.Fruit_7) return;
+
         if (collision.gameObject.CompareTag("Food"))
         {
             var fruit = collision.gameObject.GetComponent<Fruit>();
