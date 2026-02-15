@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
+    public static System.Action<FruitType> OnFruitMerged;
 
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private float _spawnDelay = 2f;
@@ -127,7 +128,9 @@ public class GameController : MonoBehaviour
         }
     #endif
     }
+    #endregion
 
+    #region Move/Drop
     private void MoveFruit(Vector2 screenPos)
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
@@ -171,6 +174,7 @@ public class GameController : MonoBehaviour
         
         VFXPooling.Instance.PlayVFX(mergePos);
 
+        OnFruitMerged?.Invoke(nextType);
         FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
     }
     #endregion
