@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private int _score;
 
     private bool _isPaused = false;
+    private bool _isPlaySound = true;
     private float _minX, _maxX;
     private Fruit _currentFruit;
     private FruitType _currentType;
@@ -224,5 +225,10 @@ public class GameController : MonoBehaviour
     // Getter, setter
     public bool IsGameOver => _isGameOver;
     public bool IsPause => _isPaused;
+    public bool IsPLaySound
+    {
+        set => _isPlaySound = value;
+        get => _isPlaySound;
+    }
     public float DeathY => _deathZoneTransform.position.y;
 }

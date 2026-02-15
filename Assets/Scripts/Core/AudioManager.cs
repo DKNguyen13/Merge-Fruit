@@ -24,16 +24,18 @@ public class AudioManager : MonoBehaviour
     void Awake()
     {
         _auSrc = GetComponent<AudioSource>();
-        _auSrc.loop = false;
-
         Setup();
     }
 
     void Update()
     {
-        if (!_auSrc.isPlaying)
+        if (!_auSrc.isPlaying && GameController.Instance.IsPLaySound)
         {
             PlayRandomBgm();
+        }
+        else if (_auSrc.isPlaying && !GameController.Instance.IsPLaySound)
+        {
+            _auSrc.Stop();
         }
     }
 
@@ -82,10 +84,11 @@ public class AudioManager : MonoBehaviour
     #region SFX
     public void PlaySfx(SoundType type)
     {
+        if (GameController.Instance.IsPLaySound == false) return;
         if (!_soundDict.TryGetValue(type, out var source)) return;
 
         source.pitch = Random.Range(0.93f, 1.07f);
-        source.Play();
+        source.PlayOneShot(source.clip);
         source.pitch = 1f;
     }
     #endregion

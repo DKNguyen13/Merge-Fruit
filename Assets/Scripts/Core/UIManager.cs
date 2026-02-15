@@ -71,11 +71,15 @@ public class UIManager : MonoBehaviour
             GameController.Instance.PauseGame(true);
             _settingUI.SetActive(true);
         });
+
         _homeBtn.onClick.AddListener(() =>
         {
             GameController.Instance.PauseGame(false);
             SceneManager.LoadScene("MainScene");
         });
+
+        _soundBtn.onClick.AddListener(() => GameController.Instance.IsPLaySound = !GameController.Instance.IsPLaySound);
+
         _closeSettingUIBtn.onClick.AddListener(() =>
         {
             GameController.Instance.PauseGame(false);
