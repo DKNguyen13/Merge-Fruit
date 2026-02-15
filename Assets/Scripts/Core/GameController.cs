@@ -167,6 +167,8 @@ public class GameController : MonoBehaviour
 
         FruitPooling.Instance.ReturnFruitFromPool(a.gameObject);
         FruitPooling.Instance.ReturnFruitFromPool(b.gameObject);
+        
+        VFXPooling.Instance.PlayVFX(mergePos);
 
         FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
     }

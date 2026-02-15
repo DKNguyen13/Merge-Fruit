@@ -45,3 +45,6 @@ TagManager:
   - name: Food
     uniqueID: 2705355295
     locked: 0
+  - name: VFX
+    uniqueID: 2821107165
+    locked: 0
