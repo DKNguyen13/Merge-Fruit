@@ -6,6 +6,7 @@ public class GameController : MonoBehaviour
     public static GameController Instance { get; private set; }
     public static System.Action<FruitType> OnFruitMerged;
 
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private Transform _deathZoneTransform;
     [SerializeField] private float _spawnDelay = 2f;
@@ -186,6 +187,7 @@ public class GameController : MonoBehaviour
         FruitPooling.Instance.ReturnFruitFromPool(b.gameObject);
         
         VFXPooling.Instance.PlayVFX(mergePos);
+        _audioManager.PlaySfx(SoundType.Pop);
 
         OnFruitMerged?.Invoke(nextType);
         FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
