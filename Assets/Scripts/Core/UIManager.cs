@@ -26,6 +26,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button _soundBtn;
     [SerializeField] private Button _closeSettingUIBtn;
 
+    [Header("Result UI")]
+    [SerializeField] private GameObject _resultUI;
+    [SerializeField] private Button _closeResultUIBtn;
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private TextMeshProUGUI _highScoreText;
+
     private int _displayScore;
     private Coroutine _scoreRoutine;
 
@@ -42,7 +48,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        if (!_shopBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn)
+        if (!_shopBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn || !_closeResultUIBtn)
         {
             Debug.LogError("Button null!");
             return;
@@ -54,7 +60,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (!_settingUI)
+        if (!_settingUI || !_resultUI)
         {
             Debug.LogError("UI null!");
             return;
@@ -79,11 +85,19 @@ public class UIManager : MonoBehaviour
         });
 
         _soundBtn.onClick.AddListener(() => GameController.Instance.IsPLaySound = !GameController.Instance.IsPLaySound);
+        
 
+        // Close button
         _closeSettingUIBtn.onClick.AddListener(() =>
         {
             GameController.Instance.PauseGame(false);
             _settingUI.SetActive(false);
+        });
+
+        _closeResultUIBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            _resultUI.SetActive(false);
         });
     }
     #endregion
@@ -121,6 +135,14 @@ public class UIManager : MonoBehaviour
     public void UpdateNextFoodUI(FruitType type)
     {
         _nextFruitImage.sprite = _fruitSprites[(int)type];
+    }
+    #endregion
+
+    #region Result UI
+    public void ShowResultUI()
+    {
+        _resultUI.SetActive(true);
+        Time.timeScale = 0;
     }
     #endregion
 }

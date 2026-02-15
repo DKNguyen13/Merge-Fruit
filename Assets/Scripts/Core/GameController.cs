@@ -209,6 +209,7 @@ public class GameController : MonoBehaviour
         if (_isGameOver) return;
 
         _isGameOver = true;
+        UIManager.Instance.ShowResultUI();
 
         Debug.Log("GAME OVER!");
     }
