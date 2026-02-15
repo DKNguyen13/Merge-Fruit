@@ -2219,11 +2219,13 @@ MonoBehaviour:
   _scoreText: {fileID: 273338067}
   _nextFruitImage: {fileID: 636968880}
   _fruitSprites:
-  - {fileID: -1801141080, guid: b96fc6c01a216244d9d315a4f0c1c978, type: 3}
-  - {fileID: 1920360948, guid: b96fc6c01a216244d9d315a4f0c1c978, type: 3}
-  - {fileID: -1008267336, guid: b96fc6c01a216244d9d315a4f0c1c978, type: 3}
-  - {fileID: -674280424, guid: b96fc6c01a216244d9d315a4f0c1c978, type: 3}
-  - {fileID: -1806032409, guid: b96fc6c01a216244d9d315a4f0c1c978, type: 3}
+  - {fileID: -1142017246, guid: 46532456657b2d249a36234fe2648031, type: 3}
+  - {fileID: 747731807, guid: 0f0b95c84d3f6d14a959840bf5b47ed1, type: 3}
+  - {fileID: 893381075, guid: 46532456657b2d249a36234fe2648031, type: 3}
+  - {fileID: -519249118, guid: 0f0b95c84d3f6d14a959840bf5b47ed1, type: 3}
+  - {fileID: 1714447432, guid: 828926afab106354cbabe8acaea56b03, type: 3}
+  - {fileID: 275229177, guid: 828926afab106354cbabe8acaea56b03, type: 3}
+  - {fileID: 392231208, guid: 0f0b95c84d3f6d14a959840bf5b47ed1, type: 3}
 --- !u!4 &2010258642
 Transform:
   m_ObjectHideFlags: 0
