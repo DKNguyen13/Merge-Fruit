@@ -142,6 +142,7 @@ public class GameController : MonoBehaviour
     {
         Rigidbody2D rb = _currentFruit.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.angularVelocity = Random.Range(-300f, 300f);
 
         _currentFruit.HideDivideLine();
         _currentFruit = null;
