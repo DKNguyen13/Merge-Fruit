@@ -1,20 +1,29 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
+    public static System.Action<FruitType> OnFruitMerged;
 
+    [SerializeField] private AudioManager _audioManager;
     [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private Transform _deathZoneTransform;
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnCountdownTimer;
     [SerializeField] private bool _canSpawn = true;
     [SerializeField] private bool _isDrag = false;
     [SerializeField] private int _score;
+
+    private bool _isPaused = false;
+    private bool _isPlaySound = true;
     private float _minX, _maxX;
     private Fruit _currentFruit;
     private FruitType _currentType;
     private FruitType _nextType;
 
+    // Bool
+    private bool _isGameOver = false;
 
     void Awake()
     {
@@ -41,6 +50,8 @@ public class GameController : MonoBehaviour
 
     void Update()
     {
+        if (_isGameOver || _isPaused) return;
+
         HandleInput();
         
         if (!_canSpawn)
@@ -100,6 +111,21 @@ public class GameController : MonoBehaviour
     {
         if (_currentFruit == null) return;
 
+    #if UNITY_EDITOR
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        if (Input.GetMouseButton(0))
+        {
+            MoveFruit(Input.mousePosition);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            DropFruit();
+        }
+    #elif UNITY_ANDROID
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -115,19 +141,11 @@ public class GameController : MonoBehaviour
             }
         }
 
-    #if UNITY_EDITOR
-        if (Input.GetMouseButton(0))
-        {
-            MoveFruit(Input.mousePosition);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            DropFruit();
-        }
     #endif
     }
+    #endregion
 
+    #region Move/Drop
     private void MoveFruit(Vector2 screenPos)
     {
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
@@ -142,6 +160,7 @@ public class GameController : MonoBehaviour
     {
         Rigidbody2D rb = _currentFruit.GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Dynamic;
+        rb.angularVelocity = Random.Range(-60f, 60f);
 
         _currentFruit.HideDivideLine();
         _currentFruit = null;
@@ -169,7 +188,9 @@ public class GameController : MonoBehaviour
         FruitPooling.Instance.ReturnFruitFromPool(b.gameObject);
         
         VFXPooling.Instance.PlayVFX(mergePos);
+        _audioManager.PlaySfx(SoundType.Pop);
 
+        OnFruitMerged?.Invoke(nextType);
         FruitPooling.Instance.GetFruitMergeFromPool(nextType, mergePos);
     }
     #endregion
@@ -181,4 +202,34 @@ public class GameController : MonoBehaviour
         UIManager.Instance.UpdateScore(_score);
     }
     #endregion
+
+    #region Handler gameover
+    public void GameOver()
+    {
+        if (_isGameOver) return;
+
+        _isGameOver = true;
+        UIManager.Instance.ShowResultUI();
+
+        Debug.Log("GAME OVER!");
+    }
+    #endregion
+
+    #region Pause game
+    public void PauseGame(bool pause)
+    {
+        _isPaused = pause;
+        Time.timeScale = pause ? 0 : 1;
+    }
+    #endregion
+
+    // Getter, setter
+    public bool IsGameOver => _isGameOver;
+    public bool IsPause => _isPaused;
+    public bool IsPLaySound
+    {
+        set => _isPlaySound = value;
+        get => _isPlaySound;
+    }
+    public float DeathY => _deathZoneTransform.position.y;
 }

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
@@ -18,6 +20,18 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _nextFruitImage;
     [SerializeField] private Sprite[] _fruitSprites;
 
+    [Header("Setting UI")]
+    [SerializeField] private GameObject _settingUI;
+    [SerializeField] private Button _homeBtn;
+    [SerializeField] private Button _soundBtn;
+    [SerializeField] private Button _closeSettingUIBtn;
+
+    [Header("Result UI")]
+    [SerializeField] private GameObject _resultUI;
+    [SerializeField] private Button _closeResultUIBtn;
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private TextMeshProUGUI _highScoreText;
+
     private int _displayScore;
     private Coroutine _scoreRoutine;
 
@@ -34,7 +48,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        if (!_shopBtn || !_settingBtn)
+        if (!_shopBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn || !_closeResultUIBtn)
         {
             Debug.LogError("Button null!");
             return;
@@ -45,13 +59,53 @@ public class UIManager : MonoBehaviour
             Debug.LogError("Text null!");
             return;
         }
+
+        if (!_settingUI || !_resultUI)
+        {
+            Debug.LogError("UI null!");
+            return;
+        }
+
+        RegisterEventButton();
     }
-    
+
+    #region Handle button
+    private void RegisterEventButton()
+    {
+        _settingBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(true);
+            _settingUI.SetActive(true);
+        });
+
+        _homeBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            SceneManager.LoadScene("MainScene");
+        });
+
+        _soundBtn.onClick.AddListener(() => GameController.Instance.IsPLaySound = !GameController.Instance.IsPLaySound);
+        
+
+        // Close button
+        _closeSettingUIBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            _settingUI.SetActive(false);
+        });
+
+        _closeResultUIBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            _resultUI.SetActive(false);
+        });
+    }
+    #endregion
+
     #region Score
     public void UpdateScore(int targetScore)
     {
-        if (_scoreRoutine != null)
-            StopCoroutine(_scoreRoutine);
+        if (_scoreRoutine != null) StopCoroutine(_scoreRoutine);
 
         _scoreRoutine = StartCoroutine(AnimateScore(targetScore));
     }
@@ -81,6 +135,14 @@ public class UIManager : MonoBehaviour
     public void UpdateNextFoodUI(FruitType type)
     {
         _nextFruitImage.sprite = _fruitSprites[(int)type];
+    }
+    #endregion
+
+    #region Result UI
+    public void ShowResultUI()
+    {
+        _resultUI.SetActive(true);
+        Time.timeScale = 0;
     }
     #endregion
 }
