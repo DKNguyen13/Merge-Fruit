@@ -2878,7 +2878,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1682594492
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3338,6 +3338,10 @@ MonoBehaviour:
   _homeBtn: {fileID: 1288591564}
   _soundBtn: {fileID: 832347134}
   _closeSettingUIBtn: {fileID: 1908071144}
+  _resultUI: {fileID: 1682594491}
+  _closeResultUIBtn: {fileID: 567901604}
+  _currentScoreText: {fileID: 0}
+  _highScoreText: {fileID: 0}
 --- !u!4 &2010258642
 Transform:
   m_ObjectHideFlags: 0
