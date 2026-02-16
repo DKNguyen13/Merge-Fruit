@@ -163,7 +163,7 @@ public class GameController : MonoBehaviour
         }
 
     #elif UNITY_ANDROID
-        if (EventSystem.current.IsPointerOverGameObject()) return;
+        if (EventSystem.current.IsPointerOverGameObject(touch.fingerId)) return;
 
         if (Input.touchCount > 0)
         {
