@@ -7,7 +7,6 @@ public class MenuController : MonoBehaviour
     [SerializeField] private Button _playGameBtn;
     void Awake()
     {
-        Application.targetFrameRate = 60;
     }
 
     void Start()

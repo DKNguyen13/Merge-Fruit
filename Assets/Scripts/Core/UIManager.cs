@@ -9,10 +9,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [Header("Button")]
-    [SerializeField] private Button _shopBtn;
-    [SerializeField] private Button _settingBtn;
-
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _scoreText;
 
@@ -20,7 +16,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _nextFruitImage;
     [SerializeField] private Sprite[] _fruitSprites;
 
+    [Header("Shop UI")]
+    [SerializeField] private Button _shopBtn;
+    [SerializeField] private Button _closeShopUIBtn;
+    [SerializeField] private GameObject _shopUI;
+
     [Header("Setting UI")]
+    [SerializeField] private Button _settingBtn;
     [SerializeField] private GameObject _settingUI;
     [SerializeField] private Button _homeBtn;
     [SerializeField] private Button _soundBtn;
@@ -28,9 +30,14 @@ public class UIManager : MonoBehaviour
 
     [Header("Result UI")]
     [SerializeField] private GameObject _resultUI;
+    [SerializeField] private CanvasGroup _scoreGroup;
+    [SerializeField] private CanvasGroup _buttonResultGroup;
+    [SerializeField] private Button _homeResultUIBtn;
     [SerializeField] private Button _closeResultUIBtn;
-    [SerializeField] private TextMeshProUGUI _currentScoreText;
     [SerializeField] private TextMeshProUGUI _highScoreText;
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private float _fadeDuration = 0.3f;
+    private Coroutine _resultRoutine;
 
     private int _displayScore;
     private Coroutine _scoreRoutine;
@@ -48,19 +55,19 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        if (!_shopBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn || !_closeResultUIBtn)
+        if (!_shopBtn || !_closeShopUIBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn || !_closeResultUIBtn || !_homeResultUIBtn)
         {
             Debug.LogError("Button null!");
             return;
         }
 
-        if (!_scoreText)
+        if (!_scoreText || !_highScoreText || !_currentScoreText)
         {
             Debug.LogError("Text null!");
             return;
         }
 
-        if (!_settingUI || !_resultUI)
+        if (!_settingUI || !_resultUI || !_shopUI)
         {
             Debug.LogError("UI null!");
             return;
@@ -78,14 +85,26 @@ public class UIManager : MonoBehaviour
             _settingUI.SetActive(true);
         });
 
+        _shopBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(true);
+            _shopUI.SetActive(true);
+        });
+
+        _soundBtn.onClick.AddListener(() => GameController.Instance.IsPLaySound = !GameController.Instance.IsPLaySound);
+
+        // Home button
         _homeBtn.onClick.AddListener(() =>
         {
             GameController.Instance.PauseGame(false);
             SceneManager.LoadScene("MainScene");
         });
 
-        _soundBtn.onClick.AddListener(() => GameController.Instance.IsPLaySound = !GameController.Instance.IsPLaySound);
-        
+        _homeResultUIBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            SceneManager.LoadScene("MainScene");
+        });
 
         // Close button
         _closeSettingUIBtn.onClick.AddListener(() =>
@@ -97,12 +116,18 @@ public class UIManager : MonoBehaviour
         _closeResultUIBtn.onClick.AddListener(() =>
         {
             GameController.Instance.PauseGame(false);
-            _resultUI.SetActive(false);
+            SceneManager.LoadScene("GameplayScene");
+        });
+
+        _closeShopUIBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            _shopUI.SetActive(false);
         });
     }
     #endregion
 
-    #region Score
+    #region Score 
     public void UpdateScore(int targetScore)
     {
         if (_scoreRoutine != null) StopCoroutine(_scoreRoutine);
@@ -139,10 +164,77 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Result UI
-    public void ShowResultUI()
+    public void ShowResultUI(int currentScore, int highScore)
+    {
+        if (_resultRoutine != null) StopCoroutine(_resultRoutine);
+        _resultRoutine = StartCoroutine(ResultRoutine(currentScore, highScore));
+
+        if (currentScore > highScore)
+        {
+            GameManager.Instance.SaveData(currentScore);
+        }
+    }
+
+    private IEnumerator ResultRoutine(int current, int high)
     {
         _resultUI.SetActive(true);
-        Time.timeScale = 0;
+
+        _scoreGroup.alpha = 0;
+        _currentScoreText.text = "Score : 0 <sprite=1>";
+        _highScoreText.text = "High score: 0 <sprite=1>";
+
+        float timer = 0;
+
+        while (timer < _fadeDuration)
+        {
+            timer += Time.unscaledDeltaTime;
+            _scoreGroup.alpha = timer / _fadeDuration;
+            yield return null;
+        }
+        _scoreGroup.alpha = 1;
+
+        yield return StartCoroutine(CountScore(_highScoreText, high, "High score: "));
+        
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        yield return StartCoroutine(CountScore(_currentScoreText, current, "Score: "));
+
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        timer = 0;
+        _buttonResultGroup.alpha = 0;
+        _buttonResultGroup.blocksRaycasts = false;
+        _buttonResultGroup.interactable = false;
+
+        while (timer < _fadeDuration)
+        {
+            timer += Time.unscaledDeltaTime;
+            _buttonResultGroup.alpha = timer / _fadeDuration;
+            yield return null;
+        }
+
+        _buttonResultGroup.alpha = 1;
+        _buttonResultGroup.blocksRaycasts = true;
+        _buttonResultGroup.interactable = true;
+    }
+
+    private IEnumerator CountScore(TextMeshProUGUI text, int target, string titleText = "Score: ")
+    {
+        float duration = 0.8f;
+        float timer = 0;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+            float t = timer / duration;
+
+            int value = Mathf.RoundToInt(Mathf.Lerp(0, target, t));
+            text.text = titleText + value.ToString("N0") + " <sprite=1>";
+
+            yield return null;
+        }
+
+        text.text = titleText + target.ToString("N0") + " <sprite=1>";
     }
     #endregion
 }

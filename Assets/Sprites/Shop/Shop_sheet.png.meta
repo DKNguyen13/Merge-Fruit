@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f6deb1f03234a1046a790d3e3833ba5e
+guid: 131bda284a0b04349ad644dec6230050
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,7 +69,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: candy_0
+      name: Shop_sheet_0
       rect:
         serializedVersion: 2
-        x: 389
-        y: 9
-        width: 69
-        height: 66
+        x: 28
+        y: 1175
+        width: 298
+        height: 296
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: af462396b24bc7f4e8dbed95f72f60d9
-      internalID: 2005294512
+      spriteID: ae03930b84f2fc54f872f25cd09dfc03
+      internalID: -1235893820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: candy_1
+      name: Shop_sheet_1
       rect:
         serializedVersion: 2
-        x: 479
-        y: 14
-        width: 54
-        height: 49
+        x: 27
+        y: 794
+        width: 298
+        height: 296
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d5c7cf22520b67149a5c57029290f5da
-      internalID: 898245288
+      spriteID: a5bce5a0339057247bd03104c98fa339
+      internalID: 404339150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: candy_2
+      name: Shop_sheet_2
       rect:
         serializedVersion: 2
-        x: 680
-        y: 8
-        width: 69
-        height: 66
+        x: 27
+        y: 414
+        width: 298
+        height: 296
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,8 +166,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 48f8d0b4f260fa2429bede0f8c4dbb9a
-      internalID: 292988705
+      spriteID: 7427bba3ac985ba4791bdbf962ea68fb
+      internalID: -16439260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Shop_sheet_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 38
+        width: 298
+        height: 296
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca6b0fe0b639929459e6c1ffcafd632a
+      internalID: 1506016330
       vertices: []
       indices: 
       edges: []
@@ -183,9 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      candy_0: 2005294512
-      candy_1: 898245288
-      candy_2: 292988705
+      Shop_sheet_0: -1235893820
+      Shop_sheet_1: 404339150
+      Shop_sheet_2: -16439260
+      Shop_sheet_3: 1506016330
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
