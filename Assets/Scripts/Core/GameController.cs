@@ -11,18 +11,19 @@ public class GameController : MonoBehaviour
     [SerializeField] private Transform _deathZoneTransform;
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnCountdownTimer;
-    [SerializeField] private bool _canSpawn = true;
-    [SerializeField] private bool _isDrag = false;
     [SerializeField] private int _score;
 
-    private bool _isPaused = false;
-    private bool _isPlaySound = true;
     private float _minX, _maxX;
     private Fruit _currentFruit;
     private FruitType _currentType;
     private FruitType _nextType;
 
     // Bool
+    private bool _isDrag = false;
+    private bool _canSpawn = true;
+    private bool _isPaused = false;
+    private bool _isPlaySound = true;
+    private bool _isDragging = false;
     private bool _isGameOver = false;
 
     void Awake()
@@ -34,7 +35,6 @@ public class GameController : MonoBehaviour
         }
 
         Instance = this;
-
         Setup();
     }
 
@@ -111,18 +111,57 @@ public class GameController : MonoBehaviour
     {
         if (_currentFruit == null) return;
 
+    // #if UNITY_EDITOR
+    //     if (EventSystem.current.IsPointerOverGameObject()) return;
+
+    //     if (Input.GetMouseButton(0))
+    //     {
+    //         MoveFruit(Input.mousePosition);
+    //     }
+
+    //     if (Input.GetMouseButtonUp(0))
+    //     {
+    //         DropFruit();
+    //     }
+    // #elif UNITY_ANDROID
+    //     if (EventSystem.current.IsPointerOverGameObject()) return;
+
+    //     if (Input.touchCount > 0)
+    //     {
+    //         Touch touch = Input.GetTouch(0);
+
+    //         if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+    //         {
+    //             MoveFruit(touch.position);
+    //         }
+
+    //         if (touch.phase == TouchPhase.Ended)
+    //         {
+    //             DropFruit();
+    //         }
+    //     }
+
+    // #endif
+
     #if UNITY_EDITOR
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
+        {
+            _isDragging = true;
+        }
+
+        if (Input.GetMouseButton(0) && _isDragging)
         {
             MoveFruit(Input.mousePosition);
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && _isDragging)
         {
             DropFruit();
+            _isDragging = false;
         }
+
     #elif UNITY_ANDROID
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
@@ -130,17 +169,30 @@ public class GameController : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            if (touch.phase == TouchPhase.Began)
+            {
+                _isDragging = true;
+            }
+
+            if (_isDragging && (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary))
             {
                 MoveFruit(touch.position);
             }
 
-            if (touch.phase == TouchPhase.Ended)
+            if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
-                DropFruit();
+                if (_isDragging)
+                {
+                    DropFruit();
+                    _isDragging = false;
+                }
             }
         }
-
+        else if (_isDragging)
+        {
+            DropFruit();
+            _isDragging = false;
+        }
     #endif
     }
     #endregion

@@ -1737,8 +1737,6 @@ MonoBehaviour:
   _deathZoneTransform: {fileID: 1596610512}
   _spawnDelay: 1.8
   _spawnCountdownTimer: 0
-  _canSpawn: 1
-  _isDrag: 0
   _score: 0
 --- !u!1 &934987005
 GameObject:
@@ -2350,7 +2348,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -100, y: -280}
+  m_Offset: {x: -150, y: -155.58728}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2361,7 +2359,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 2000}
+  m_Size: {x: 200, y: 2248.8254}
   m_EdgeRadius: 0
 --- !u!1 &1191103964
 GameObject:
@@ -2431,7 +2429,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 100, y: -280}
+  m_Offset: {x: 150, y: -160.16785}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2442,7 +2440,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 100, y: 2000}
+  m_Size: {x: 200, y: 2239.6643}
   m_EdgeRadius: 0
 --- !u!1 &1271946322
 GameObject:
