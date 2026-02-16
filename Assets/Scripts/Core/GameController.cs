@@ -110,6 +110,11 @@ public class GameController : MonoBehaviour
     private void HandleInput()
     {
         if (_currentFruit == null) return;
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _score = 1000;
+            GameOver();
+        }
 
     // #if UNITY_EDITOR
     //     if (EventSystem.current.IsPointerOverGameObject()) return;
@@ -261,8 +266,9 @@ public class GameController : MonoBehaviour
         if (_isGameOver) return;
 
         _isGameOver = true;
-        UIManager.Instance.ShowResultUI();
+        PauseGame(true);
 
+        UIManager.Instance.ShowResultUI(_score, GameManager.Instance.GetHighScore());
         Debug.Log("GAME OVER!");
     }
     #endregion
