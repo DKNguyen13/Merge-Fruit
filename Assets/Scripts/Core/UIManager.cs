@@ -9,10 +9,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [Header("Button")]
-    [SerializeField] private Button _shopBtn;
-    [SerializeField] private Button _settingBtn;
-
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _scoreText;
 
@@ -20,7 +16,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _nextFruitImage;
     [SerializeField] private Sprite[] _fruitSprites;
 
+    [Header("Shop UI")]
+    [SerializeField] private Button _shopBtn;
+    [SerializeField] private Button _closeShopUIBtn;
+    [SerializeField] private GameObject _shopUI;
+
     [Header("Setting UI")]
+    [SerializeField] private Button _settingBtn;
     [SerializeField] private GameObject _settingUI;
     [SerializeField] private Button _homeBtn;
     [SerializeField] private Button _soundBtn;
@@ -53,7 +55,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        if (!_shopBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn || !_closeResultUIBtn || !_homeResultUIBtn)
+        if (!_shopBtn || !_closeShopUIBtn || !_settingBtn || !_homeBtn || !_soundBtn || !_closeSettingUIBtn || !_closeResultUIBtn || !_homeResultUIBtn)
         {
             Debug.LogError("Button null!");
             return;
@@ -65,7 +67,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        if (!_settingUI || !_resultUI)
+        if (!_settingUI || !_resultUI || !_shopUI)
         {
             Debug.LogError("UI null!");
             return;
@@ -81,6 +83,12 @@ public class UIManager : MonoBehaviour
         {
             GameController.Instance.PauseGame(true);
             _settingUI.SetActive(true);
+        });
+
+        _shopBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(true);
+            _shopUI.SetActive(true);
         });
 
         _soundBtn.onClick.AddListener(() => GameController.Instance.IsPLaySound = !GameController.Instance.IsPLaySound);
@@ -109,6 +117,12 @@ public class UIManager : MonoBehaviour
         {
             GameController.Instance.PauseGame(false);
             SceneManager.LoadScene("GameplayScene");
+        });
+
+        _closeShopUIBtn.onClick.AddListener(() =>
+        {
+            GameController.Instance.PauseGame(false);
+            _shopUI.SetActive(false);
         });
     }
     #endregion
