@@ -99,7 +99,7 @@ public class GameController : MonoBehaviour
 
     private FruitType GetRandomFruitType()
     {
-        int maxStartLevel = 3;
+        int maxStartLevel = 2;
         int randomIndex = UnityEngine.Random.Range(0, maxStartLevel);
 
         return (FruitType)randomIndex;

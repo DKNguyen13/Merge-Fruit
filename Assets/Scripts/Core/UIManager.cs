@@ -166,8 +166,8 @@ public class UIManager : MonoBehaviour
         _resultUI.SetActive(true);
 
         _scoreGroup.alpha = 0;
-        _currentScoreText.text = "Score : 0";
-        _highScoreText.text = "High score: 0";
+        _currentScoreText.text = "Score : 0 <sprite=1>";
+        _highScoreText.text = "High score: 0 <sprite=1>";
 
         float timer = 0;
 
@@ -215,12 +215,12 @@ public class UIManager : MonoBehaviour
             float t = timer / duration;
 
             int value = Mathf.RoundToInt(Mathf.Lerp(0, target, t));
-            text.text = titleText + value.ToString("N0");
+            text.text = titleText + value.ToString("N0") + " <sprite=1>";
 
             yield return null;
         }
 
-        text.text = titleText + target.ToString("N0");
+        text.text = titleText + target.ToString("N0") + " <sprite=1>";
     }
     #endregion
 }
