@@ -118,11 +118,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Milkyway SDF
+  m_Name: Milkyway SDF 1
   m_EditorClassIdentifier: 
-  hashCode: 1951089316
+  hashCode: -1272547403
   material: {fileID: -1878747360876214589}
-  materialHashCode: -1807916796
+  materialHashCode: -2123029131
   m_Version: 1.1.0
   m_SourceFontFileGUID: 2ee9ea0841eb96f45b14c1baacc1e1c8
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 2ee9ea0841eb96f45b14c1baacc1e1c8, type: 3}

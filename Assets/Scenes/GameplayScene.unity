@@ -681,15 +681,15 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4722449edc82b9f408b84eba37d285ce, type: 2}
-  m_sharedMaterial: {fileID: -1878747360876214589, guid: 4722449edc82b9f408b84eba37d285ce, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: af20371650bd2e748a419a9364f24d39, type: 2}
+  m_sharedMaterial: {fileID: -1878747360876214589, guid: af20371650bd2e748a419a9364f24d39, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4287994608
+  m_fontColor: {r: 0.94117653, g: 0.6039216, b: 0.58431375, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2325,6 +2325,7 @@ Transform:
   m_Children:
   - {fileID: 1596610512}
   - {fileID: 845548763}
+  - {fileID: 1755336915}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &908417602
@@ -2345,6 +2346,8 @@ MonoBehaviour:
   _spawnDelay: 1.8
   _spawnCountdownTimer: 0
   _score: 0
+  _portalPrefab: {fileID: 1666097973589916042, guid: b6db14d3524916e47b49e1880b10f84e, type: 3}
+  _portalSpawnPosition: {fileID: 1755336915}
 --- !u!1 &934987005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4649,6 +4652,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1731175901}
   m_CullTransparentMesh: 1
+--- !u!1 &1755336914
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1755336915}
+  m_Layer: 0
+  m_Name: Portal Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1755336915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1755336914}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -4, z: -0.14340532}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 908417601}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1764777292
 GameObject:
   m_ObjectHideFlags: 0
@@ -5215,7 +5249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc672e07da7106a4598807bb3f871940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 273338067}
   _nextFruitImage: {fileID: 636968880}
   _fruitSprites:
   - {fileID: -1142017246, guid: 46532456657b2d249a36234fe2648031, type: 3}
@@ -5225,6 +5258,7 @@ MonoBehaviour:
   - {fileID: 1714447432, guid: 828926afab106354cbabe8acaea56b03, type: 3}
   - {fileID: 275229177, guid: 828926afab106354cbabe8acaea56b03, type: 3}
   - {fileID: 392231208, guid: 0f0b95c84d3f6d14a959840bf5b47ed1, type: 3}
+  _scoreText: {fileID: 273338067}
   _shopBtn: {fileID: 934987007}
   _closeShopUIBtn: {fileID: 1544328953}
   _shopUI: {fileID: 124058629}
