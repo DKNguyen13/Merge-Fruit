@@ -23,12 +23,13 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        _auSrc = GetComponent<AudioSource>();
         Setup();
     }
 
     void Update()
     {
+        if (GameController.Instance.IsGameOver) return;
+        
         if (!_auSrc.isPlaying && GameController.Instance.IsPLaySound)
         {
             PlayRandomBgm();
@@ -42,6 +43,7 @@ public class AudioManager : MonoBehaviour
     #region Setup
     private void Setup()
     {
+        _auSrc = GetComponent<AudioSource>();
         _soundDict = new Dictionary<SoundType, AudioSource>();
 
         foreach (var sound in _sounds)
@@ -78,6 +80,14 @@ public class AudioManager : MonoBehaviour
         _auSrc.clip = _bgmClips[_currentIndex];
         _auSrc.Play();
 
+    }
+
+    public void StopBgm()
+    {
+        if (_auSrc.isPlaying)
+        {
+            _auSrc.Stop();
+        }
     }
     #endregion
 

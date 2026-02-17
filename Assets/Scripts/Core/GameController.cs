@@ -76,7 +76,6 @@ public class GameController : MonoBehaviour
                 _nextType = GetRandomFruitType();
 
                 UIManager.Instance.UpdateNextFoodUI(_nextType);
-
                 SpawnCurrentFruit();
             }
         }
@@ -118,6 +117,10 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GameOver();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SpawnPortal();
         }
 
     #if UNITY_EDITOR
@@ -262,6 +265,8 @@ public class GameController : MonoBehaviour
 
     public void SpawnPortal()
     {
+        _audioManager.StopBgm();
+        _audioManager.PlaySfx(SoundType.Hole);
         Instantiate(_portalPrefab, _portalSpawnPosition.position, Quaternion.identity);
     }
     #endregion
