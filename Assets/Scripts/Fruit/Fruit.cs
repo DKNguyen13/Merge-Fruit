@@ -7,7 +7,8 @@ public class Fruit : MonoBehaviour
     [SerializeField] private GameObject _devideLine;
     [SerializeField] private bool _isMerging;
     [SerializeField] private int _scoreValue;
-
+    
+    private Vector3 _originalScale;
     private float _overDeathTimer = 0f;
     private float _deathDelay = 1.5f;
 
@@ -21,6 +22,7 @@ public class Fruit : MonoBehaviour
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _originalScale = transform.localScale;
     }
 
     void Update()
@@ -77,10 +79,15 @@ public class Fruit : MonoBehaviour
     // Getter, setter
     public FruitType Type => _type;
     public Rigidbody2D Rb => _rb;
+    public Vector3 OriginalScale => _originalScale;
     public bool IsMerging
     {
         set => _isMerging = value;
         get => _isMerging;   
     }
     public int ScoreValue => _scoreValue;
+    public void ResetScale()
+    {
+        transform.localScale = _originalScale;
+    }
 }
