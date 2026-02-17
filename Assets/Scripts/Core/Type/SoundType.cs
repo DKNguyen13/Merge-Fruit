@@ -2,7 +2,6 @@ public enum SoundType
 {
     Pop,
     Hole,
-    Merge,
+    BubbleCounter,
     Drop,
-    ButtonClick
 }
