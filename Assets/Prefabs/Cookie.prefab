@@ -367,10 +367,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43662264137afe4ab83a64dcb0b9ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 6
+  _type: 7
   _devideLine: {fileID: 199302616582039426}
   _isMerging: 0
-  _scoreValue: 640
+  _scoreValue: 1280
 --- !u!1 &2993579772097122161
 GameObject:
   m_ObjectHideFlags: 0

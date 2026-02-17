@@ -7,4 +7,5 @@ public enum FruitType
     Fruit_5,
     Fruit_6,
     Fruit_7,
+    Fruit_8,
 }

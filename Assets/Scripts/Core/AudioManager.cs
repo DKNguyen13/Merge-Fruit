@@ -23,12 +23,13 @@ public class AudioManager : MonoBehaviour
 
     void Awake()
     {
-        _auSrc = GetComponent<AudioSource>();
         Setup();
     }
 
     void Update()
     {
+        if (GameController.Instance.IsGameOver) return;
+
         if (!_auSrc.isPlaying && GameController.Instance.IsPLaySound)
         {
             PlayRandomBgm();
@@ -42,6 +43,7 @@ public class AudioManager : MonoBehaviour
     #region Setup
     private void Setup()
     {
+        _auSrc = GetComponent<AudioSource>();
         _soundDict = new Dictionary<SoundType, AudioSource>();
 
         foreach (var sound in _sounds)
@@ -79,6 +81,14 @@ public class AudioManager : MonoBehaviour
         _auSrc.Play();
 
     }
+
+    public void StopBgm()
+    {
+        if (_auSrc.isPlaying)
+        {
+            _auSrc.Stop();
+        }
+    }
     #endregion
 
     #region SFX
@@ -90,6 +100,19 @@ public class AudioManager : MonoBehaviour
         source.pitch = Random.Range(0.93f, 1.07f);
         source.PlayOneShot(source.clip);
         source.pitch = 1f;
+    }
+
+    public void PlayBubbleCounterSfx()
+    {
+        if (!_soundDict.TryGetValue(SoundType.BubbleCounter, out var source)) return;
+        StopBubbleCounterSfx();
+        source.Play();
+    }
+
+    public void StopBubbleCounterSfx()
+    {
+        if (!_soundDict.TryGetValue(SoundType.BubbleCounter, out var source)) return;
+        source.Stop();
     }
     #endregion
 }

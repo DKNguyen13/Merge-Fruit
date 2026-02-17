@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    [SerializeField] private AudioManager _audioManager;
+
     [Header("Ingame UI")]
     [SerializeField] private Image _nextFruitImage;
     [SerializeField] private Sprite[] _fruitSprites;
@@ -166,7 +168,7 @@ public class UIManager : MonoBehaviour
         if (_resultRoutine != null) StopCoroutine(_resultRoutine);
         _resultRoutine = StartCoroutine(ResultRoutine(currentScore, highScore));
 
-        if (currentScore > highScore)
+        if (currentScore > highScore && GameManager.Instance != null)
         {
             GameManager.Instance.SaveData(currentScore);
         }
@@ -190,12 +192,18 @@ public class UIManager : MonoBehaviour
         }
         _scoreGroup.alpha = 1;
 
-        yield return StartCoroutine(CountScore(_highScoreText, high, "High score: "));
-        
+        if (high != 0)
+        {
+            yield return StartCoroutine(CountScore(_highScoreText, high, "High score: "));
+            _audioManager.StopBubbleCounterSfx();
+        }
         yield return new WaitForSecondsRealtime(0.2f);
 
-        yield return StartCoroutine(CountScore(_currentScoreText, current, "Score: "));
-
+        if (current != 0)
+        {
+            yield return StartCoroutine(CountScore(_currentScoreText, current, "Score: "));
+            _audioManager.StopBubbleCounterSfx();
+        }
         yield return new WaitForSecondsRealtime(0.2f);
 
         timer = 0;
@@ -219,6 +227,8 @@ public class UIManager : MonoBehaviour
     {
         float duration = 0.8f;
         float timer = 0;
+
+        _audioManager.PlayBubbleCounterSfx();
 
         while (timer < duration)
         {
