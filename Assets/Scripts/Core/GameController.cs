@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,10 @@ public class GameController : MonoBehaviour
     [SerializeField] private float _spawnDelay = 2f;
     [SerializeField] private float _spawnCountdownTimer;
     [SerializeField] private int _score;
+
+    [Header("Item")]
+    [SerializeField] private GameObject _portalPrefab;
+    [SerializeField] private Transform _portalSpawnPosition;
 
     private float _minX, _maxX;
     private Fruit _currentFruit;
@@ -112,41 +117,8 @@ public class GameController : MonoBehaviour
         if (_currentFruit == null) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            _score = 1000;
             GameOver();
         }
-
-    // #if UNITY_EDITOR
-    //     if (EventSystem.current.IsPointerOverGameObject()) return;
-
-    //     if (Input.GetMouseButton(0))
-    //     {
-    //         MoveFruit(Input.mousePosition);
-    //     }
-
-    //     if (Input.GetMouseButtonUp(0))
-    //     {
-    //         DropFruit();
-    //     }
-    // #elif UNITY_ANDROID
-    //     if (EventSystem.current.IsPointerOverGameObject()) return;
-
-    //     if (Input.touchCount > 0)
-    //     {
-    //         Touch touch = Input.GetTouch(0);
-
-    //         if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
-    //         {
-    //             MoveFruit(touch.position);
-    //         }
-
-    //         if (touch.phase == TouchPhase.Ended)
-    //         {
-    //             DropFruit();
-    //         }
-    //     }
-
-    // #endif
 
     #if UNITY_EDITOR
         if (EventSystem.current.IsPointerOverGameObject()) return;
@@ -266,10 +238,31 @@ public class GameController : MonoBehaviour
         if (_isGameOver) return;
 
         _isGameOver = true;
-        PauseGame(true);
+        _canSpawn = false;
 
-        UIManager.Instance.ShowResultUI(_score, GameManager.Instance.GetHighScore());
         Debug.Log("GAME OVER!");
+        StartCoroutine(GameOverRoutine());
+    }
+
+    private IEnumerator GameOverRoutine()
+    {
+        SpawnPortal();
+
+        yield return new WaitForSeconds(1.2f);
+
+        PauseGame(true);
+        int highScore = 0;
+
+        if (GameManager.Instance != null)
+        {
+            highScore = GameManager.Instance.GetHighScore();
+        }
+        UIManager.Instance.ShowResultUI(_score, highScore);
+    }
+
+    public void SpawnPortal()
+    {
+        Instantiate(_portalPrefab, _portalSpawnPosition.position, Quaternion.identity);
     }
     #endregion
 

@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
     }
 
-    #region Data
+    #region Score Data
     public void SaveData(int score)
     {
         int currentHighScore = GetHighScore();
@@ -33,6 +33,35 @@ public class GameManager : MonoBehaviour
     public int GetHighScore()
     {
         return PlayerPrefs.GetInt(Constants.HIGH_SCORE_KEY, 0);
+    }
+    #endregion
+
+    #region Item Data
+    public void AddItem(int amount)
+    {
+        int current = GetQuantityItem();
+        current += amount;
+
+        PlayerPrefs.SetInt(Constants.PORTAL_ITEM_KEY, current);
+        PlayerPrefs.Save();
+    }
+
+    public bool UseItem()
+    {
+        int current = GetQuantityItem();
+        if (current <= 0) return false;
+
+        current--;
+
+        PlayerPrefs.SetInt(Constants.PORTAL_ITEM_KEY, current);
+        PlayerPrefs.Save();
+
+        return true;
+    }
+
+    public int GetQuantityItem()
+    {
+        return PlayerPrefs.GetInt(Constants.PORTAL_ITEM_KEY, 0);
     }
     #endregion
 }

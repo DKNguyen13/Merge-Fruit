@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -9,12 +8,10 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [Header("Text")]
-    [SerializeField] private TextMeshProUGUI _scoreText;
-
-    [Header("Next spawn food")]
+    [Header("Ingame UI")]
     [SerializeField] private Image _nextFruitImage;
     [SerializeField] private Sprite[] _fruitSprites;
+    [SerializeField] private TextMeshProUGUI _scoreText;
 
     [Header("Shop UI")]
     [SerializeField] private Button _shopBtn;

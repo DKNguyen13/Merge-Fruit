@@ -59,6 +59,13 @@ public class Fruit : MonoBehaviour
     }
     #endregion
 
+    #region Reset
+    public void ResetScale()
+    {
+        transform.localScale = _originalScale;
+    }
+    #endregion
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (_type == FruitType.Fruit_7) return;
@@ -86,8 +93,4 @@ public class Fruit : MonoBehaviour
         get => _isMerging;   
     }
     public int ScoreValue => _scoreValue;
-    public void ResetScale()
-    {
-        transform.localScale = _originalScale;
-    }
 }
