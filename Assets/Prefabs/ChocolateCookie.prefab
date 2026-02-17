@@ -241,9 +241,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.011942319, y: -0.003980773}
+  m_Offset: {x: -0.0022082329, y: 0.010463318}
   serializedVersion: 2
-  m_Radius: 0.63623077
+  m_Radius: 0.6735266
 --- !u!50 &1199265248253617548
 Rigidbody2D:
   serializedVersion: 4
@@ -283,10 +283,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43662264137afe4ab83a64dcb0b9ebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
+  _type: 5
   _devideLine: {fileID: 79717220145135369}
   _isMerging: 0
-  _scoreValue: 160
+  _scoreValue: 320
 --- !u!1 &2412091079446643786
 GameObject:
   m_ObjectHideFlags: 0

@@ -68,7 +68,7 @@ public class Fruit : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (_type == FruitType.Fruit_7) return;
+        if (_type == FruitType.Fruit_8) return;
 
         if (collision.gameObject.CompareTag("Food"))
         {
