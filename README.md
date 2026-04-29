@@ -1,49 +1,42 @@
-# Merge Fruit
+# Sweet Fusion 🍬
 
-**Merge Fruit** is a casual *merge & upgrade* game built with **Unity** (C# + shaders). The goal is simple: **combine identical fruits to create higher-tier fruits**, chase high scores, and keep the board from filling up.
+**Sweet Fusion** is a casual *merge & upgrade* puzzle game built with Unity (C#).  
+Players combine identical candies to create higher-tier sweets, aiming for high scores while managing limited board space.
 
-> Repo: https://github.com/DKNguyen13/Merge-Fruit
+---
 
-## Highlights (CV-friendly)
-- **Unity gameplay programming (C#):** grid/board logic, merging rules, spawning, and scoring.
-- **Polished visuals with custom shaders:** ShaderLab/HLSL used for 2D effects and rendering polish.
-- **Clean, modular architecture:** reusable components for game state, UI, and input.
-- **Fast iteration:** designed as a small but complete project suitable for showcasing core game dev skills.
+## 🎮 Gameplay
+- Drop candies onto a grid-based board  
+- Merge identical candies to evolve into higher tiers  
+- Chain merges to trigger combo scores  
+- Game ends when the board is full or no valid moves remain  
 
-## Gameplay
-- Drop/spawn fruits onto the board.
-- When **two identical fruits touch**, they **merge** into the next fruit tier.
-- Merges can **chain** and quickly change the board state.
-- The game ends when the board is full (or no more valid placements remain, depending on the rules).
+---
 
-## Tech Stack
-- **Engine:** Unity
-- **Language:** C#
-- **Shaders:** ShaderLab, HLSL
+## ✨ Key Features
+- 🧠 Grid-based merge system built in C#
+- 🔁 Dynamic spawning and score progression loop
+- 🎨 Visual polish with custom ShaderLab / HLSL effects
+- 🧩 Clean architecture with separated game loop, UI, and input systems
+- ⚡ Optimized for lightweight mobile gameplay
 
-## What I Worked On
-This repository is a personal project that demonstrates:
-- Game loop & state management
-- Merge system + progression design
-- UI updates (score, next fruit, restart)
-- Effects and shader-driven visuals
+---
 
-## How to Run (Unity)
-1. Install **Unity Hub**.
-2. Open the project folder in Unity (use the Unity version specified in `ProjectSettings/ProjectVersion.txt` if available).
-3. Open the main scene (commonly located under `Assets/Scenes/`).
-4. Press **Play**.
+## 🛠 Tech Stack
+- Unity  
+- C#  
+- ShaderLab / HLSL  
 
-## Controls
-- **Mouse / Touch:** place or drop fruit
-- **R (optional):** restart (if implemented)
+---
 
-## Project Structure (typical)
-- `Assets/` — game assets, scripts, scenes
-- `ProjectSettings/` — Unity project configuration
+## 👨‍💻 My Role
+Solo developer responsible for:
+- Designing and implementing the core merge system (grid + progression)
+- Game state and UI management
+- Visual effects using shaders
+- Structuring a lightweight and scalable Unity architecture
 
-## Screenshots / Demo
-Add a GIF or screenshots here to make it stand out on your CV/portfolio.
+---
 
-## License
-No license file is included yet. If you plan to share or reuse this project broadly, consider adding an open-source license (MIT, Apache-2.0, etc.).
+## 🎯 Controls
+- **Mouse / Touch:** place candy
